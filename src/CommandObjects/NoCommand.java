@@ -13,4 +13,11 @@ public class NoCommand implements Command {
 
         System.out.println("I do nothing!");
     }
+
+    @Override
+    public void undo() {
+
+    }
+
+
 }

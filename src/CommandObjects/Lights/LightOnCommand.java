@@ -17,4 +17,11 @@ public class LightOnCommand implements Command {
         this.light.on();
     }
 
+    //undoes executes last action by turning light off
+    @Override
+    public void undo() {
+
+        this.light.off();
+    }
+
 }

@@ -3,23 +3,22 @@ package CommandObjects.Fans;
 import Interfaces.Command;
 import VendorClasses.Fans.CeilingFan;
 
-public class CeilingFanOffCommand implements Command {
+public class CeilingFanLowCommand implements Command {
 
     private CeilingFan ceilingFan;
 
-    private int prevSpeed;
+    private int prevSpeed = 0;
 
-    public CeilingFanOffCommand(CeilingFan ceilingFan) {
+    public CeilingFanLowCommand(CeilingFan ceilingFan) {
 
         this.ceilingFan = ceilingFan;
     }
 
-
     @Override
     public void execute() {
 
-        prevSpeed = this.ceilingFan.getSpeed();
-        this.ceilingFan.off();
+        this.prevSpeed = this.ceilingFan.getSpeed();
+        this.ceilingFan.low();
     }
 
     @Override

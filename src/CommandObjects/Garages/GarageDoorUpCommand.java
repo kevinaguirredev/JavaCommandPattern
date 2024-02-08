@@ -1,7 +1,7 @@
 package CommandObjects.Garages;
 
 import Interfaces.Command;
-import VendorClasses.Garage.GarageDoor;
+import VendorClasses.Garages.GarageDoor;
 
 public class GarageDoorUpCommand implements Command {
 
@@ -17,6 +17,12 @@ public class GarageDoorUpCommand implements Command {
     public void execute() {
 
         this.garageDoor.up();
+    }
+
+    @Override
+    public void undo() {
+
+        this.garageDoor.down();
     }
 
 }

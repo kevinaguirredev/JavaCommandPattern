@@ -1,68 +1,86 @@
+import CommandObjects.Fans.CeilingFanHighCommand;
+import CommandObjects.Fans.CeilingFanMediumCommand;
 import CommandObjects.Fans.CeilingFanOffCommand;
-import CommandObjects.Fans.CeilingFanOnCommand;
-import CommandObjects.Garages.GarageDoorDownCommand;
-import CommandObjects.Garages.GarageDoorUpCommand;
 import CommandObjects.Lights.LightOffCommand;
 import CommandObjects.Lights.LightOnCommand;
+import CommandObjects.Macros.MacroCommand;
+import CommandObjects.Spas.HotTubOffCommand;
+import CommandObjects.Spas.HotTubOnCommand;
 import CommandObjects.Stereos.StereoOffCommand;
-import CommandObjects.Stereos.StereoOnWithCDCommand;
-import Invoker.RemoteControl.RemoteControl;
+import CommandObjects.Stereos.StereoOnCommand;
+import CommandObjects.Televisions.TelevisionOffCommand;
+import CommandObjects.Televisions.TelevisionOnCommand;
+import Interfaces.Command;
+import Invoker.RemoteControl.RemoteControlWithUndo;
 import VendorClasses.Fans.CeilingFan;
-import VendorClasses.Garage.GarageDoor;
 import VendorClasses.Lights.Light;
+import VendorClasses.Spas.HotTub;
 import VendorClasses.Stereos.Stereo;
+import VendorClasses.Televisions.Television;
 
 public class Main {
-
     //Client code
+//    public static void main(String[] args) {
+//
+//        this is your invoker object
+//        RemoteControlWithUndo remoteControl = new RemoteControlWithUndo();
+//
+//        CeilingFan ceilingFan = new CeilingFan("Living Room");
+//
+//        CeilingFanMediumCommand ceilingFanMedium = new CeilingFanMediumCommand(ceilingFan);
+//        CeilingFanHighCommand ceilingFanHigh = new CeilingFanHighCommand(ceilingFan);
+//        CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
+//
+//        remoteControl.setCommand(0, ceilingFanMedium, ceilingFanOff);
+//        remoteControl.setCommand(1, ceilingFanHigh, ceilingFanOff);
+//
+//        remoteControl.onButtonWasPushed(0);
+//        remoteControl.offButtonWasPushed(0);
+//
+//        System.out.println(remoteControl);
+//
+//        remoteControl.undoButtonWasPushed();
+//        remoteControl.onButtonWasPushed(1);
+//
+//        System.out.println(remoteControl);
+//
+//        remoteControl.undoButtonWasPushed();
+//    }
+
     public static void main(String[] args) {
 
-        //this is your invoker object
-        RemoteControl remoteControl = new RemoteControl();
+        RemoteControlWithUndo remoteControl = new RemoteControlWithUndo();
 
-        //these are your worker classes which carry out the actual tasks
-        Light livingRoomLight = new Light("Living room");
-        Light kitchenLight = new Light("Kitchen");
-        CeilingFan ceilingFan = new CeilingFan("Living room");
-        GarageDoor garageDoor = new GarageDoor("Garage");
-        Stereo stereo = new Stereo("Living room");
+        Light light = new Light("Living Room");
+        Television tv = new Television("Living Room");
+        Stereo stereo = new Stereo("Living Room");
+        HotTub hotTub = new HotTub("Living Room");
 
-        //Encapsulated requests created by this client
-        LightOnCommand livingRoomLightOn = new LightOnCommand(livingRoomLight);
-        LightOffCommand livingRoomLightOff = new LightOffCommand(livingRoomLight);
+        LightOnCommand lightOnCommand = new LightOnCommand(light);
+        TelevisionOnCommand tvOnCommand = new TelevisionOnCommand(tv);
+        StereoOnCommand stereoOnCommand = new StereoOnCommand(stereo);
+        HotTubOnCommand hotTubOnCommand = new HotTubOnCommand(hotTub);
 
-        LightOnCommand kitchenLightOn = new LightOnCommand(kitchenLight);
-        LightOffCommand kitchenLightOff = new LightOffCommand(kitchenLight);
+        LightOffCommand lightOffCommand = new LightOffCommand(light);
+        TelevisionOffCommand tvOffCommand = new TelevisionOffCommand(tv);
+        StereoOffCommand stereoOffCommand = new StereoOffCommand(stereo);
+        HotTubOffCommand hotTubOffCommand = new HotTubOffCommand(hotTub);
 
-        CeilingFanOnCommand ceilingFanOn = new CeilingFanOnCommand(ceilingFan);
-        CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
+        Command[] partyOn = { lightOnCommand, tvOnCommand, stereoOnCommand, hotTubOnCommand };
+        Command[] partyOff = { lightOffCommand, tvOffCommand, stereoOffCommand, hotTubOffCommand };
 
-        GarageDoorUpCommand garageDoorUp = new GarageDoorUpCommand(garageDoor);
-        GarageDoorDownCommand garageDoorDown = new GarageDoorDownCommand(garageDoor);
+        MacroCommand partyOnMacro = new MacroCommand(partyOn);
+        MacroCommand partyOffMacro = new MacroCommand(partyOff);
 
-        StereoOnWithCDCommand stereoOnWithCD = new StereoOnWithCDCommand(stereo);
-        StereoOffCommand stereoOff = new StereoOffCommand(stereo);
+        remoteControl.setCommand(0, partyOnMacro, partyOffMacro);
 
-        //register command objects with invoker
-        remoteControl.setCommand(0, livingRoomLightOn, livingRoomLightOff);
-        remoteControl.setCommand(1, kitchenLightOn, kitchenLightOff);
-        remoteControl.setCommand(2, ceilingFanOn, ceilingFanOff);
-        remoteControl.setCommand(3, stereoOnWithCD, stereoOff);
+        System.out.println(remoteControl);
+        System.out.println("--- Pushing Macro On ---");
 
-        System.out.println(remoteControl.toString());
-
+        System.out.println("Get ready to partay!");
         remoteControl.onButtonWasPushed(0);
+
+        System.out.println("--- Pushing Macro Off ---");
         remoteControl.offButtonWasPushed(0);
-
-        remoteControl.onButtonWasPushed(1);
-        remoteControl.offButtonWasPushed(1);
-
-        remoteControl.onButtonWasPushed(2);
-        remoteControl.offButtonWasPushed(2);
-
-        remoteControl.onButtonWasPushed(3);
-        remoteControl.offButtonWasPushed(3);
-
     }
-
 }

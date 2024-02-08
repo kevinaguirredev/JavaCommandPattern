@@ -3,13 +3,16 @@ package Invoker.RemoteControl;
 import CommandObjects.NoCommand;
 import Interfaces.Command;
 
-public class RemoteControl {
+public class RemoteControlWithUndo {
 
     Command[] onCommands;
     Command[] offCommands;
 
+    //added this instance variable to hold the last command performed
+    Command undoCommand;
+
     //RemoteControl invoker constructor method to initialize and instantiate off/on command arrays
-    public RemoteControl() {
+    public RemoteControlWithUndo() {
 
         onCommands = new Command[7];
         offCommands = new Command[7];
@@ -21,6 +24,9 @@ public class RemoteControl {
             onCommands[counter] = noCommand;
             offCommands[counter] = noCommand;
         }
+
+        //set undoCommand instance variable to null object (see NoCommand.java)
+        undoCommand = noCommand;
     }
 
     //setCommand method to set slot in remote control with off/on command
@@ -43,6 +49,7 @@ public class RemoteControl {
         }
 
         onCommands[slot].execute();
+        undoCommand = onCommands[slot];
     }
 
     public void offButtonWasPushed(int slot) {
@@ -53,6 +60,12 @@ public class RemoteControl {
         }
 
         offCommands[slot].execute();
+        undoCommand = offCommands[slot];
+    }
+
+    public void undoButtonWasPushed() {
+
+        undoCommand.undo();
     }
 
     @Override

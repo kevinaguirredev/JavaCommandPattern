@@ -1,12 +1,12 @@
-package VendorClasses.Lights;
+package VendorClasses.Spas;
 
-public class Light {
+public class HotTub {
 
     private String location;
 
-    private static final String LIGHT_POSTFIX = "light";
+    private static final String HOTTUB_PREFIX = "hot tub";
 
-    public Light(String location) {
+    public HotTub(String location) {
 
         this.location = location;
     }
@@ -23,7 +23,6 @@ public class Light {
 
     private String getLocation() {
 
-        return this.location + " " + LIGHT_POSTFIX + " ";
+        return this.location + " " + HOTTUB_PREFIX + " ";
     }
-
 }

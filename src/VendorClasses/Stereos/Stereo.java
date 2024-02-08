@@ -13,12 +13,12 @@ public class Stereo {
 
     public void on() {
 
-        System.out.println(getLocation()  + " is on!");
+        System.out.println(getLocation()  + "is on!");
     }
 
     public void off() {
 
-        System.out.println(getLocation() + " is off!");
+        System.out.println(getLocation() + "is off!");
     }
 
     public void setCd() {
@@ -43,6 +43,6 @@ public class Stereo {
 
     private String getLocation() {
 
-        return this.location + STEREO_POSTFIX;
+        return this.location + " " + STEREO_POSTFIX + " ";
     }
 }

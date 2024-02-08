@@ -3,11 +3,11 @@ package CommandObjects.Stereos;
 import Interfaces.Command;
 import VendorClasses.Stereos.Stereo;
 
-public class StereoOffCommand implements Command {
+public class StereoOnCommand implements Command {
 
     private Stereo stereo;
 
-    public StereoOffCommand(Stereo stereo) {
+    public StereoOnCommand(Stereo stereo) {
 
         this.stereo = stereo;
     }
@@ -15,12 +15,12 @@ public class StereoOffCommand implements Command {
     @Override
     public void execute() {
 
-        this.stereo.off();
+        this.stereo.on();
     }
 
     @Override
     public void undo() {
 
-        this.stereo.on();
+        this.stereo.off();
     }
 }

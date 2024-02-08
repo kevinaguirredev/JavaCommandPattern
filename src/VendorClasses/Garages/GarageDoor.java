@@ -1,4 +1,4 @@
-package VendorClasses.Garage;
+package VendorClasses.Garages;
 
 public class GarageDoor {
 
